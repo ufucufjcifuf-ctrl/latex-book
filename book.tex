@@ -1,0 +1,346 @@
+\documentclass[11pt,oneside]{scrbook}
+\usepackage[a4paper, margin=1.6cm, top=2.0cm, bottom=2.0cm, footskip=0.9cm]{geometry} 
+\usepackage{fontspec}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{pifont}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta, positioning, calc}
+\usepackage{circuitikz}
+\usepackage{multicol}
+\usepackage{graphicx}
+\usepackage{tabularx}
+\usepackage{array}
+
+\newcommand{\examtitle}{Dhaka University (DU 'A' Unit) - Master Model Test 2023--24} 
+
+\usepackage[bidi=default, layout=sectioning.tabular, english]{babel}
+\babelprovide[import, main, maparabic]{bengali}
+\babelprovide[onchar=ids fonts]{english}
+\babelfont{rm}[Renderer=Harfbuzz, Language=Default]{Kalpurush}
+\babelfont{sf}[Renderer=Harfbuzz, Language=Default]{Kalpurush}
+\babelfont[english]{rm}[Language=Default]{Times New Roman}
+\babelfont[english]{sf}[Language=Default]{Times New Roman}
+\newfontfamily\engfont{Times New Roman} 
+\newcommand{\eng}[1]{{\engfont #1}}
+
+\makeatletter
+\renewcommand{\operator@font}{\mathgroup\symoperators\engfont}
+\makeatother
+
+\linespread{1.18} 
+\setlength{\parindent}{0pt} 
+\setlength{\parskip}{4pt}   
+
+\setlist[itemize]{label=\textcolor{HiveNavy}{\ding{226}}, leftmargin=14pt, noitemsep, topsep=1pt}
+\setlist[enumerate]{leftmargin=14pt, noitemsep, topsep=1pt}
+
+% Colors
+\definecolor{HiveNavy}{HTML}{0F1A2C}    
+\definecolor{HiveGold}{HTML}{D4AF37}    
+\definecolor{VarsityBlue}{HTML}{1A5276}
+\definecolor{AccentTeal}{HTML}{0E6655}
+\definecolor{ErrorRed}{HTML}{C0392B}
+\definecolor{TipGreen}{HTML}{1E8449}
+\definecolor{HackMagenta}{HTML}{A51D24}
+\definecolor{WrittenPurple}{HTML}{4A235A}
+\definecolor{LightGray}{HTML}{F8F9FA}   
+
+\newcommand{\hack}[1]{\relax\ifmmode\textcolor{HackMagenta}{\mathbf{#1}}\else\textcolor{HackMagenta}{\textbf{#1}}\fi}
+
+% ======================================================================
+% TColorBox Architecture & Custom Environments
+% ======================================================================
+\newtcolorbox{examheader}{colback=HiveNavy, colframe=HiveGold, arc=5pt, boxrule=1.5pt, halign=center, valign=center, top=8pt, bottom=8pt, after=\vspace{6pt}}
+
+\newenvironment{subjectheading}[1]{%
+    \begin{tcolorbox}[colback=VarsityBlue!12, colframe=VarsityBlue, arc=3pt, boxrule=0.8pt,
+        halign=center, top=3pt, bottom=3pt, left=2pt, right=2pt, after=\vspace{4pt}]
+    \centering\bfseries\color{VarsityBlue}#1%
+}{%
+    \end{tcolorbox}%
+}
+
+\newtcolorbox{matrixbox}{breakable, colback=white, colframe=VarsityBlue, arc=5pt, boxrule=1.2pt, 
+    title={\textbf{[Master OMR Answer Key Matrix] একঝলকে উত্তরমালা}}, coltitle=white, colbacktitle=VarsityBlue, fonttitle=\bfseries, after=\vspace{12pt}}
+
+\newenvironment{subjectbanner}[1]{%
+    \begin{tcolorbox}[colback=VarsityBlue!10, colframe=VarsityBlue, arc=4pt, boxrule=1.2pt,
+        halign=center, top=6pt, bottom=6pt, after=\vspace{8pt}]
+    {\large\bfseries\color{VarsityBlue}#1}%
+}{%
+    \end{tcolorbox}%
+}
+
+\newtcolorbox{mcqsolcard}[2][]{breakable, colback=white, colframe=VarsityBlue, arc=4pt, boxrule=1.1pt,
+    title={\textbf{#2}}, coltitle=white, colbacktitle=VarsityBlue, fonttitle=\small\bfseries,
+    top=6pt, bottom=6pt, left=8pt, right=8pt, after=\vspace{9pt}, #1}
+
+\newtcolorbox{writtensolcard}[2][]{breakable, colback=white, colframe=WrittenPurple, arc=4pt, boxrule=1.1pt,
+    title={\textbf{#2}}, coltitle=white, colbacktitle=WrittenPurple, fonttitle=\bfseries,
+    top=6pt, bottom=6pt, left=8pt, right=8pt, after=\vspace{8pt}, #1}
+
+% Two-Column Option Macros
+\newcommand{\choicefour}[4]{%
+  \par\vspace{1pt}
+  \begin{tabularx}{\linewidth}{XXXX}
+    \textbf{(a)} #1 & \textbf{(b)} #2 & \textbf{(c)} #3 & \textbf{(d)} #4
+  \end{tabularx}\par\vspace{1pt}
+}
+
+\newcommand{\choicetwo}[4]{%
+  \par\vspace{1pt}
+  \begin{tabularx}{\linewidth}{XX}
+    \textbf{(a)} #1 & \textbf{(b)} #2 \\
+    \textbf{(c)} #3 & \textbf{(d)} #4
+  \end{tabularx}\par\vspace{1pt}
+}
+
+\newcommand{\choiceone}[4]{%
+  \begin{enumerate}[label=\textbf{(\alph*)}, noitemsep, topsep=1pt, leftmargin=16pt]
+    \item #1 \item #2 \item #3 \item #4
+  \end{enumerate}
+}
+
+% Multicols Settings
+\setlength{\columnsep}{18pt}
+\setlength{\columnseprule}{0.5pt}
+\def\columnseprulecolor{\color{HiveNavy!25}}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textcolor{HiveNavy!80}{\textbf{\examtitle}}}
+\fancyhead[R]{\small\textcolor{HiveNavy!80}{\textbf{\eng{Learn Hive - Master Model Test Series}}}}
+\fancyfoot[C]{\textcolor{HiveNavy}{\eng{\textnormal{\arabic{page}}}}} 
+\renewcommand{\headrulewidth}{0.5pt} 
+\renewcommand{\footrulewidth}{0pt} 
+
+\begin{document}
+\thispagestyle{empty}
+
+% ======================================================================
+% PHASE 1: REAL-EXAM MODEL TEST PAPER (পরীক্ষা কক্ষ সিমুলেশন)
+% ======================================================================
+
+\begin{examheader}
+    {\LARGE\bfseries\color{white} ঢাকা বিশ্ববিদ্যালয় ভর্তি পরীক্ষা মডেল টেস্ট ২০২৩--২৪}\\[3pt]
+    {\large\bfseries\color{HiveGold} ইউনিট: বিজ্ঞান (DU 'A' Unit) \textbar{} পূর্ণাঙ্গ প্রশ্নপত্র}\\[4pt]
+    {\footnotesize\color{white} সময়: ১ ঘণ্টা ৩০ মিনিট \textbar{} পূর্ণমান: ১০০ (MCQ ৬০ + লিখিত ৪০) \textbar{} নেগেটিভ মার্কিং: ০.২৫ \textbar{} ক্যালকুলেটর সম্পূর্ণ নিষিদ্ধ}
+\end{examheader}
+
+\begin{multicols*}{2}
+
+% ----------------------------------------------------
+% SUBJECT: PHYSICS MCQ
+% ----------------------------------------------------
+\begin{subjectheading}{পদার্থবিজ্ঞান (Physics) \textbar{} মান: ১৫}
+\end{subjectheading}
+
+\textbf{০১.} একটি সরল ছন্দিত স্পন্দনে স্পন্দিত কণার সরণ $x = A/2$ হলে, কণাটির গতিশক্তি ও মোট শক্তির অনুপাত কত?
+\choicefour{$1:4$}{$3:4$}{$1:2$}{$2:3$}
+
+\textbf{০২.} চিত্রানুযায়ী একটি সরল বর্তনীতে $R_1 = 4\,\Omega$, $R_2 = 6\,\Omega$ এবং $E = 12\,\text{V}$ হলে বর্তনীর মূল প্রবাহ কত?
+\par\vspace{2pt}
+\begin{center}
+\begin{circuitikz}[scale=0.75, transform shape]
+    \draw (0,0) to[battery1, l=$12\,\text{V}$] (0,2)
+          to[short] (1,2)
+          to[R, l=$4\,\Omega$] (3,2)
+          to[R, l=$6\,\Omega$] (5,2)
+          to[short] (5,0)
+          to[short] (0,0);
+\end{circuitikz}
+\end{center}
+\choicefour{$1.0\,\text{A}$}{$1.2\,\text{A}$}{$2.4\,\text{A}$}{$0.8\,\text{A}$ }
+
+\textbf{০৩.} ভূ-পৃষ্ঠ হতে কত উচ্চতায় অভিকর্ষজ ত্বরণের মান ভূ-পৃষ্ঠের মানের $1/4$ অংশ হবে? ($R$ = পৃথিবীর ব্যাসার্ধ)
+\choicefour{$R/2$}{$R$}{$2R$}{$4R$}
+
+% ----------------------------------------------------
+% SUBJECT: CHEMISTRY MCQ
+% ----------------------------------------------------
+\begin{subjectheading}{রসায়ন (Chemistry) \textbar{} মান: ১৫}
+\end{subjectheading}
+
+\textbf{০৪.} নিচের কোন যৌগটিতে কেন্দ্রীয় পরমাণুর $sp^3d$ সংকরায়ন ঘটে?
+\choicefour{$\text{SF}_6$}{$\text{PCl}_5$}{$\text{CH}_4$}{$\text{NH}_3$}
+
+\textbf{০৫.} $25^\circ\text{C}$ তাপমাত্রায় $0.005\,\text{M}\ \text{H}_2\text{SO}_4$ দ্রবণের $\text{pH}$ কত?
+\choicefour{$2.0$}{$2.3$}{$1.0$}{$1.7$}
+
+% ----------------------------------------------------
+% SUBJECT: HIGHER MATHEMATICS MCQ
+% ----------------------------------------------------
+\begin{subjectheading}{উচ্চতর গণিত (Higher Mathematics) \textbar{} মান: ১৫}
+\end{subjectheading}
+
+\textbf{০৬.} মান নির্ণয় কর: $\lim_{x \to 0} \frac{\sin 5x}{\ln(1 + 2x)}$
+\choicefour{$5/2$}{$2/5$}{$1$}{$0$}
+
+\textbf{০৭.} $A = \begin{pmatrix} 2 & 3 \\ 1 & 4 \end{pmatrix}$ হলে, $A^{-1}$ ম্যাট্রিক্সটি কোনটি?
+\choicetwo{$\frac{1}{5}\begin{pmatrix} 4 & -3 \\ -1 & 2 \end{pmatrix}$}{$\frac{1}{5}\begin{pmatrix} 4 & 3 \\ 1 & 2 \end{pmatrix}$}{$\frac{1}{11}\begin{pmatrix} 4 & -3 \\ -1 & 2 \end{pmatrix}$}{$\begin{pmatrix} -4 & 3 \\ 1 & -2 \end{pmatrix}$}
+
+\end{multicols*}
+
+% ----------------------------------------------------
+% PHASE 1: WRITTEN SECTION (Full Width Single-Column)
+% ----------------------------------------------------
+\vspace{6pt}
+\begin{tcolorbox}[colback=WrittenPurple!5, colframe=WrittenPurple, arc=4pt, boxrule=1.2pt, title={\textbf{লিখিত অংশ (Written Test Paper) \textbar{} পূর্ণমান: ৪০ \textbar{} সময়: ৪৫ মিনিট}}]
+    \begin{enumerate}[label=\textbf{\arabic*.}]
+        \item \textbf{[পদার্থবিজ্ঞান]}: $2000\,\text{kg}$ ভরের একটি গাড়ি $54\,\text{km/h}$ বেগে চলছিল। ব্রেক চেপে গাড়িটিকে $15\,\text{m}$ দূরত্বের মধ্যে থামিয়ে দেওয়া হলো। মন্দনকারী বলের মান কত? \hfill [২.৫]
+        \item \textbf{[উচ্চতর গণিত]}: নির্দিষ্ট সমাকলনটি সমাধান কর: $\int_{0}^{\pi/2} \frac{\sin x}{\sin x + \cos x} \, dx$ \hfill [২.৫]
+    \end{enumerate}
+\end{tcolorbox}
+
+\newpage
+
+% ======================================================================
+% PHASE 2: MASTER QUICK-CHECK ANSWER KEY MATRIX (মাস্টার উত্তরমালা)
+% ======================================================================
+
+\begin{matrixbox}
+\centering
+\begin{tabularx}{\textwidth}{||c|c|c||c|c|c||c|c|c||}
+\hline
+\rowcolor{VarsityBlue!15}
+\textbf{প্রশ্ন} & \textbf{সঠিক উত্তর} & \textbf{বিষয়} & \textbf{প্রশ্ন} & \textbf{সঠিক উত্তর} & \textbf{বিষয়} & \textbf{প্রশ্ন} & \textbf{সঠিক উত্তর} & \textbf{বিষয়} \\
+\hline
+০১ & \textbf{(b)} $3:4$ & পদার্থবিজ্ঞান & ০৪ & \textbf{(b)} $\text{PCl}_5$ & রসায়ন & ০৭ & \textbf{(a)} $\frac{1}{5}\begin{pmatrix} 4 & -3 \\ -1 & 2 \end{pmatrix}$ & গণিত \\
+\hline
+০২ & \textbf{(b)} $1.2\,\text{A}$ & পদার্থবিজ্ঞান & ০৫ & \textbf{(a)} $2.0$ & রসায়ন & -- & -- & -- \\
+\hline
+০৩ & \textbf{(b)} $R$ & পদার্থবিজ্ঞান & ০৬ & \textbf{(a)} $5/2$ & গণিত & -- & -- & -- \\
+\hline
+\end{tabularx}
+
+\vspace{8pt}
+\begin{tcolorbox}[colback=LightGray, colframe=HiveGold, boxrule=0.8pt, arc=3pt, top=4pt, bottom=4pt]
+    \footnotesize\textbf{* একাডেমিক নিরীক্ষা নোট:} সকল উত্তর ঢাকা বিশ্ববিদ্যালয়ের মূল প্রশ্নপদ্ধতি ও উচ্চমাধ্যমিক বোর্ড অনুমোদিত পাঠ্যপুস্তকের মানদণ্ডে যাচাইকৃত। 
+\end{tcolorbox}
+
+\vspace{4pt}
+\begin{tabularx}{\textwidth}{XXXX}
+    \textbf{মোট সঠিক:} \underline{\hspace{1.5cm}} & \textbf{ভুল উত্তর:} \underline{\hspace{1.5cm}} & \textbf{নেগেটিভ মার্ক:} \underline{\hspace{1.5cm}} & \textbf{অর্জিত স্কোর:} \underline{\hspace{1.8cm}}
+\end{tabularx}
+\end{matrixbox}
+
+\newpage
+
+% ======================================================================
+% PHASE 3: DEEP POST-MORTEM MASTER SOLUTION LAB (পুঙ্খানুপুঙ্খ সমাধান)
+% ======================================================================
+
+\begin{subjectbanner}{পদার্থবিজ্ঞান (Physics) \textbar{} পুঙ্খানুপুঙ্খ পোস্ট-মর্টেম সমাধান}
+\end{subjectbanner}
+
+% Question 01 Card
+\begin{mcqsolcard}{Question 01 \textbar{} সরল ছন্দিত স্পন্দন ও শক্তি রূপান্তর}
+\textbf{মূল প্রশ্ন:} একটি সরল ছন্দিত স্পন্দনে স্পন্দিত কণার সরণ $x = A/2$ হলে, কণাটির গতিশক্তি ও মোট শক্তির অনুপাত কত?
+\choicefour{$1:4$}{\textcolor{TipGreen}{\textbf{$3:4$}}}{$1:2$}{$2:3$}
+
+\tcbline
+
+\textcolor{TipGreen}{\ding{51}} \textbf{[সঠিক উত্তর]: Option (b) \textbar{} $3:4$}
+
+\ding{226} \textbf{[একাডেমিক মূল সমাধান]:}\\
+সরল ছন্দিত গতিতে কণার গতিশক্তি $E_k = \frac{1}{2} k (A^2 - x^2)$ এবং মোট শক্তি $E = \frac{1}{2} k A^2$।\\
+এখানে সরণ $x = \frac{A}{2}$ বসালে পাই:
+\[
+E_k = \frac{1}{2} k \left(A^2 - \frac{A^2}{4}\right) = \frac{3}{4} \cdot \left(\frac{1}{2} k A^2\right) = \frac{3}{4} E
+\]
+অতএব, গতিশক্তি ও মোট শক্তির অনুপাত:
+\[
+\frac{E_k}{E} = \frac{\frac{3}{4}E}{E} = \frac{3}{4} \implies 3:4
+\]
+
+\ding{226} \textbf{[১০-সেকেন্ড ভার্সিটি হ্যাক ও ক্যালকুলেটর-লেস ট্রিক]:}\\
+\hack{সরণ $x = A/n$ হলে, বিভবশক্তি $E_p = \frac{1}{n^2} E$ এবং গতিশক্তি $E_k = \frac{n^2 - 1}{n^2} E$।}\\
+এখানে $n = 2$, সুতরাং অনুপাত সরাসরি $\hack{\frac{2^2 - 1}{2^2} = \frac{3}{4}}$।
+
+\textcolor{ErrorRed}{\ding{55}} \textbf{[০.২৫ নেগেটিভ মার্কিং ফাঁদ]:}\\
+পরীক্ষার্থী তাড়াহুড়ায় বিভবশক্তি ও মোট শক্তির অনুপাত ($1:4$) অথবা গতিশক্তি ও বিভবশক্তির অনুপাত ($3:1$) গুলিয়ে ফেলে ভুল অপশনে বৃত্ত ভরাট করে।
+
+\ding{226} \textbf{[এনসিটিবি রেফারেন্স ও মেমোরি হ্যাক]:}\\
+পদার্থবিজ্ঞান ১ম পত্র: অধ্যায় ৮ (পর্যায়বৃত্ত গতি)। সাম্যাবস্থায় গতিশক্তি সর্বোচ্চ এবং প্রান্তবিন্দুতে বিভবশক্তি সর্বোচ্চ।
+\end{mcqsolcard}
+
+% Question 02 Card
+\begin{mcqsolcard}{Question 02 \textbar{} চলতড়িৎ ও ওহমের সূত্র}
+\textbf{মূল প্রশ্ন:} চিত্রানুযায়ী একটি সরল বর্তনীতে $R_1 = 4\,\Omega$, $R_2 = 6\,\Omega$ এবং $E = 12\,\text{V}$ হলে বর্তনীর মূল প্রবাহ কত?
+\choicefour{$1.0\,\text{A}$}{\textcolor{TipGreen}{\textbf{$1.2\,\text{A}$}}}{$2.4\,\text{A}$}{$0.8\,\text{A}$}
+
+\tcbline
+
+\textcolor{TipGreen}{\ding{51}} \textbf{[সঠিক উত্তর]: Option (b) \textbar{} $1.2\,\text{A}$}
+
+\ding{226} \textbf{[একাডেমিক মূল সমাধান]:}\\
+যেহেতু রোধ দুটি শ্রেণিতে যুক্ত, তাই বর্তনীর তুল্যরোধ:
+\[
+R_s = R_1 + R_2 = 4\,\Omega + 6\,\Omega = 10\,\Omega
+\]
+ওহমের সূত্রানুযায়ী বর্তনীর মূল প্রবাহ:
+\[
+I = \frac{E}{R_s} = \frac{12\,\text{V}}{10\,\Omega} = 1.2\,\text{A}
+\]
+
+\ding{226} \textbf{[১০-সেকেন্ড ভার্সিটি হ্যাক ও ক্যালকুলেটর-লেস ট্রিক]:}\\
+\hack{শ্রেণি সমবায়ে সরাসরি তুল্যরোধ যোগ: $4+6=10$। $12/10 = 1.2\,\text{A}$।}
+\end{mcqsolcard}
+
+\begin{subjectbanner}{উচ্চতর গণিত (Mathematics) \textbar{} পুঙ্খানুপুঙ্খ সমাধান}
+\end{subjectbanner}
+
+% Question 06 Card
+\begin{mcqsolcard}{Question 06 \textbar{} ক্যালকুলাস (লিমিট ও লা' হসপিটাল রুল)}
+\textbf{মূল প্রশ্ন:} মান নির্ণয় কর: $\lim_{x \to 0} \frac{\sin 5x}{\ln(1 + 2x)}$
+\choicefour{\textcolor{TipGreen}{\textbf{$5/2$}}}{$2/5$}{$1$}{$0$}
+
+\tcbline
+
+\textcolor{TipGreen}{\ding{51}} \textbf{[সঠিক উত্তর]: Option (a) \textbar{} $5/2$}
+
+\ding{226} \textbf{[একাডেমিক মূল সমাধান]:}\\
+দেওয়া আছে, $\lim_{x \to 0} \frac{\sin 5x}{\ln(1 + 2x)}$। এটি একটি $\frac{0}{0}$ অনির্ণেয় আকার।\\
+L'Hôpital's Rule প্রয়োগ করে লব ও হরকে অন্তরীকরণ করি:
+\[
+\lim_{x \to 0} \frac{\frac{d}{dx}(\sin 5x)}{\frac{d}{dx}[\ln(1 + 2x)]} = \lim_{x \to 0} \frac{5 \cos 5x}{\frac{2}{1 + 2x}} = \frac{5 \cdot \cos(0)}{\frac{2}{1 + 0}} = \frac{5}{2}
+\]
+
+\ding{226} \textbf{[১০-সেকেন্ড ভার্সিটি হ্যাক ও ক্যালকুলেটর-লেস ট্রিক]:}\\
+\hack{ভার্সিটি শর্টকাট: $\lim_{x \to 0} \frac{\sin ax}{\ln(1 + bx)} = \frac{a}{b}$।}\\
+সরাসরি উত্তর: $\hack{\frac{5}{2}}$।
+\end{mcqsolcard}
+
+% Written Solution Card
+\begin{writtensolcard}{Written Solution 01 \textbar{} পদার্থবিজ্ঞান (কাজ, শক্তি ও বল)}
+\textbf{সমস্যা:} $2000\,\text{kg}$ ভরের একটি গাড়ি $54\,\text{km/h}$ বেগে চলছিল। ব্রেক চেপে গাড়িটিকে $15\,\text{m}$ দূরত্বের মধ্যে থামিয়ে দেওয়া হলো। মন্দনকারী বলের মান কত?
+
+\tcbline
+
+\textbf{[ধাপে ধাপে নম্বর বণ্টন ও মডেল উত্তর]:}
+\begin{itemize}
+    \item \textbf{ধাপ ১: একক রূপান্তর [০.৫ নম্বর]}\\
+    গাড়ির প্রাথমিক বেগ: $u = 54\,\text{km/h} = \frac{54 \times 1000}{3600}\,\text{m/s} = 15\,\text{m/s}$। শেষ বেগ $v = 0$। দূরত্ব $s = 15\,\text{m}$।
+    
+    \item \textbf{ধাপ ২: ত্বরণ/মন্দন নির্ণয় [১.০ নম্বর]}\\
+    গতির সমীকরণ হতে পাই: $v^2 = u^2 - 2as \implies 0 = 15^2 - 2 \cdot a \cdot 15$
+    \[
+    30a = 225 \implies a = \frac{225}{30} = 7.5\,\text{m/s}^2
+    \]
+    
+    \item \textbf{ধাপ ৩: মন্দনকারী বলের মান [১.০ নম্বর]}\\
+    নিউটনের ২য় সূত্রানুসারে:
+    \[
+    F = ma = 2000\,\text{kg} \times 7.5\,\text{m/s}^2 = \mathbf{15000\,\text{N}} = \mathbf{15\,\text{kN}}
+    \]
+\end{itemize}
+\textbf{চূড়ান্ত উত্তর:} মন্দনকারী বলের মান \eng{\textbf{15 kN}}।
+\end{writtensolcard}
+
+\end{document}
